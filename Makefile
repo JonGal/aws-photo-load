@@ -12,6 +12,7 @@ ZIP=zip
 ZIPOPTIONS=-r
 ZIPFILE=call-site.zip
 site=call-site
+PROFILE=Matt-qtpetpix
 
 
 #Flags
@@ -22,16 +23,8 @@ site_ROLE_TESTED=site_role_tested
 
 
 $(site_DELIVERED): $(SRC)
-	gsutil cp $(SRC) gs://www.petqts.com
-	$(foreach var, $(SRC), gsutil acl ch -u AllUsers:R gs://www.petqts.com/$(var);)
-	#gsutil acl ch -u AllUsers:R gs://www.petqts.com/$<
+   $(foreach var, $(SRC), aws s3 cp $(var) s3://qtpetpix.com --profile $(PROFILE))
 	touch $(site_DELIVERED)
-
-#$(SEND): $(SRC)
-	#gsutil cp $@ gs://www.gc-tips.com
-#	$(foreach var, $(SRC), gsutil acl ch -u AllUsers:R gs://www.gc-tips.com/$(var);)
-#	$(foreach var, $(SRC), gsutil acl ch -u AllUsers:R gs://www.gc-tips.com/$(var);)
-
 
 all: $(site_DELIVERED) 
 
